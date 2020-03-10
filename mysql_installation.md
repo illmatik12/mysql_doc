@@ -1,4 +1,11 @@
 # Mysql installation 
+## Version
+```
+[root@9129d64aed67 log]# mysql --version
+mysql  Ver 14.14 Distrib 5.7.29, for Linux (x86_64) using  EditLine wrapper
+[root@9129d64aed67 log]#
+```
+
 ## single 
 ```
 yum install mysql-community-server
@@ -28,8 +35,7 @@ https://khj93.tistory.com/entry/MHA-MHA-%EA%B5%AC%EC%84%B1-%EB%B0%8F-%EC%84%A4%E
 
 
 ### MHA 설치 – 의존성 패키지 설치
-* 각 replication 노드들에서 실행
-
+* 각 replication 노드들에서 실행, 누락되는 패키지 없는지 확인한다.
 ```
 yum list epel-release
 yum install epel-release
@@ -96,14 +102,26 @@ log-bin=mysql-bin
 server-id=1
 log_bin                 = /var/log/mysql/mysql-bin
 log_bin_index           = /var/log/mysql/mysql-bin.index
+
+#innodb
+innodb_buffer_pool_size = 2048M
+
+max_allowed_packet=128M
+innodb_log_file_size=128M
 ```
 
 3. slave my.conf
 ```
 server-id=2
-replicate-do-db='repl_db'
+replicate-do-db='repl_db'  // 리플리케이션DB명(생략시엔 전체DB를 리플리케이션함)
 log_bin                 = /var/log/mysql/mysql-bin
 log_bin_index           = /var/log/mysql/mysql-bin.index
+
+#innodb
+innodb_buffer_pool_size = 2048M
+
+max_allowed_packet=128M
+innodb_log_file_size=128M
 ```
 
 4. mysqldump 
@@ -180,7 +198,10 @@ candidate_master=1
 ```
 
 #### SSH key 설정
+> docker 이미지에 ssh가 안깔려 있다면 설치한다. ssh 설정 참조
 ```
+yum install -y openssh-server openssh-clients
+
 ssh-keyget -t rsa
 
 
