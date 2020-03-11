@@ -95,6 +95,7 @@ flush privileges;
 2. my.conf
 log_bin 권한 변경 필요.
 실제 운영 환경 구성시 세부 파라미터 설정 필요.
+https://www.percona.com/blog/2015/06/02/80-ram-tune-innodb_buffer_pool_size/
 ```
 vi /etc/my.cnf
 [mysqld]

@@ -275,5 +275,29 @@ InnoDB 테이블(클러스터 테이블)의 모든 보조 인덱스는 해당 �
 
 ## monitoring query 
 세션 및 트랜잭션 참조
+### Thread Monigoring
+```sql
+show status where variable_name in (
+    'max_used_connections',
+    'aborted_clients',
+    'aborted_connects',
+    'threads_connected',
+    'connections'
+    );
+```
+
+### Table size
+```sql
+SELECT TABLE_NAME AS "Tables",
+                     round(((data_length + index_length) / 1024 / 1024), 2) "Size in MB"
+FROM information_schema.TABLES
+ORDER BY (data_length + index_length) DESC;
+```
+## PMM2 Monitoring
+
+https://rastalion.me/archives/882
+
+$ pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.17.0.6:443
 
 
+pmm-admin add mysql --query-source=perfschema --username=user1 --password=Mysql123! repl_db 172.17.0.4:3306
