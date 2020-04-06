@@ -301,3 +301,7 @@ $ pmm-admin config --server-insecure-tls --server-url=https://admin:admin@172.17
 
 
 pmm-admin add mysql --query-source=perfschema --username=user1 --password=Mysql123! repl_db 172.17.0.4:3306
+
+
+### 참고 
+- https://aws.amazon.com/ko/blogs/database/best-practices-for-configuring-parameters-for-amazon-rds-for-mysql-part-1-parameters-related-to-performance/
