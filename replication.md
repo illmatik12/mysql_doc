@@ -1,13 +1,46 @@
-#Replication Architecture
+# Replication Architecture
 ## binlog  
 - mysql에서 출력하는 로그로 row의 내용을 저장하며 주로 replication에 사용
 - 일련번호로 파일 생성.
 - 변경 이력 저장.
 
-### Binlog formay 
+### Binlog format 
 - Statement : SQL 자체를 저장
 - Row : row를 그대로 복사
 - Mixed : 위의 두가지 방식 혼재.
+
+#### Binary log 관리 
+- 용량 확보를 위해 bin log 삭제 
+- expire_log_days로 보관 기간 조절 가능 
+```sql
+mysql> show binary logs;
++------------------+-----------+
+| Log_name         | File_size |
++------------------+-----------+
+| mysql-bin.000002 |       672 |
+| mysql-bin.000003 |       177 |
+| mysql-bin.000004 |      1651 |
+| mysql-bin.000005 |       446 |
+| mysql-bin.000006 |       447 |
+| mysql-bin.000007 |      1720 |
+| mysql-bin.000008 |  10263547 |
++------------------+-----------+
+7 rows in set (0.08 sec)
+
+mysql> purge master logs to
+    -> 'mysql-bin.000008';
+Query OK, 0 rows affected (0.33 sec)
+
+ysql> show variables like 'expire%';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| expire_logs_days | 0     |
++------------------+-------+
+1 row in set (0.00 sec)
+
+mysql>
+```
 
 ## redo log 
 - innodb engin에서만 사용 (engine level)
