@@ -173,6 +173,8 @@ drwxr-x--- 2 root  root      8192 Apr  7 10:05 sys
 ```
 
 #### Recovery
+- --copy-back 옵션 사용
+- --apply-log 최신 로그 내용 반영
 ```
 /usr/bin/innobackupex --defaults-file=/etc/my.cnf --copy-back /xbackup/mysql5/2020-04-07_10-04-58
 
