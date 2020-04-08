@@ -15,7 +15,9 @@ https://ssup2.github.io/theory_analysis/MySQL_Buffer_Pool_Redo_Log_Log_Buffer/
     [그림 2] MySQL Flush Log Buffer
     InnoDB가 Log Buffer의 내용을 Redo Log에 Write 및 Flush 동작을 언제 수행할지 설정한다. 현재 MySQL에서는 0,1,2 3개의 Option만을 제공한다. Default 값은 1로 설정되어 있다. [그림 2]는 Option에 따른 Write, Flush 동작이 언제 수행되는지를 나타내고 있다.
 * Option 0 : InnoDB는 Redo Log에 Write 및 Flush 동작을 Commit과 관계없이 1초 간격으로 수행한다. Commit 명령으로 Transaction이 끝나도 Data 변경 내용은 최대 1초동안 Redo Log Buffer에만 반영 되어 있고, Redo Log에 반영되지 않을 수 있다. 따라서 0 Option 이용시 MySQL에 장애 및 MySQL이 동작하는 Node에 장애가 발생 할 경우, 장애 발생전 1초 동안의 Transaction 내용은 유실된다.
+
 * Option 1 : InnoDB는 Redo Log에 Write 및 Flush 동작을 Commit 명령이 수행될 때마다 같이 수행한다. 잦은 Write 및 Flush 동작으로 Disk 접근 횟수가 많아 성능이 느려지지만, 완료된 Transaction은 어떠한 장애가 발생하여도 유실되지 않는다.
+
 * Option 2 : InnoDB는 Redo Log에 Write 동작은 Commit 명령이 수행될 때마다 같이 수행하지만, Flush 동작은 1초 간격으로 수행한다. Option 0과 Option 1의 중간 형태의 동작을 수행한다. 단순히 MySQL에만 장애가 발생하였다면 OS Cache에 저장된 Transaction 내용은 Redo Log에 반영될 확률이 높다. 하지만 MySQL이 동작하는 Node에 장애가 발생하였을 경우, Node 장애 발생전 1초 동안의 Transaction 내용은 유실된다.
 
 ## session configuration
@@ -79,8 +81,11 @@ mysql> SELECT object_schema AS schema_name,
 
 mysql>
 ```
+
 쿼리 통계 조회 
+
 ```sql
+
 // 최근 실행된 쿼리 이력 기능 활성화
 UPDATE performance_schema.setup_consumers SET ENABLED = 'yes' WHERE NAME = 'events_statements_history'
 UPDATE performance_schema.setup_consumers SET ENABLED = 'yes' WHERE NAME = 'events_statements_history_long'
@@ -230,7 +235,7 @@ https://12bme.tistory.com/149?category=682920
 
 클러스터링 인덱스 구조를 보면 클러스터링 테이블의 구조 자체는 일반 B-Tree와 많이 비슷하게 닮아 있습니다. 하지만 B-Tree의 리프 노드와는 달리 클러스터링 인덱스의 리프 노드에는 레코드의 모든 컬럼이 같이 저장되어 있습니다. 즉 클러스터링 테이블은 그 자체가 하나의 거대한 인덱스 구조로 관리되는 것입니다.
 
-> 프라이머리 키가 없는 경우에는 InnoDB 스토리지 엔진이 다음의 우선순위대로 프라이머리 키를 대체할 칼럼을 선택합니다.
+> 프라이머리 키가 없는 경우에는 InnoDB 스토리지 엔진이 다음의 우선순위대로 프라이머리 키를 대체할 칼럼을 선택합니다. (primary key를 반드시 잡기를 권장.)
 
 
 #### Secondary Index 
@@ -275,7 +280,7 @@ InnoDB 테이블(클러스터 테이블)의 모든 보조 인덱스는 해당 �
 
 ## monitoring query 
 세션 및 트랜잭션 참조
-### Thread Monigoring
+### Thread Monitoring
 ```sql
 show status where variable_name in (
     'max_used_connections',
@@ -307,4 +312,8 @@ pmm-admin add mysql --query-source=perfschema --username=user1 --password=Mysql1
 - https://aws.amazon.com/ko/blogs/database/best-practices-for-configuring-parameters-for-amazon-rds-for-mysql-part-1-parameters-related-to-performance/
 
 > 잡다한 팁
-- https://bstar36.tistory.com/category/MYSQL%20and%20Maria?page=26
+- https://bstar36.tistory.com/category/MYSQL%20and%20Maria?page=26Z
+
+
+> DBaaS
+- https://portworx.com/mysql-kubernetes-kops/

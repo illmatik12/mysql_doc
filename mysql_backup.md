@@ -211,6 +211,45 @@ IMPORTANT: Please check that the copy-back run completes successfully.
 권한 복구 후 기동 
 
 
+
+### Innodb force recovery
+* recovery 옵션 값 설명
+```
+– 0 기본값
+
+– 1 (SRV_FORCE_IGNORE_CORRUPT)
+
+서버가 깨진 페이지를 발견한다고 하더라도 계속 구동하도록 만든다.
+
+Try to make SELECT * FROM tbl_name로 하여금 깨진 인덱스 레코드와 페이지를 건너 띄도록 만들며, 이렇게 하면 테이블을 덤핑하는데 도움이 된다.
+
+– 2 (SRV_FORCE_NO_BACKGROUND)
+
+메인 쓰레드가 구동되지 못하도록 한다.
+
+만일 퍼지 연산 (purge operation)이 진행되는 동안 크래시가 발생한다면, 이 복구 값은 퍼지 연산이 실행되는 것을 막게 된다.
+
+– 3 (SRV_FORCE_NO_TRX_UNDO)
+
+복구 다음에 트랜젝션 롤백을 실행하지 않는다.
+
+– 4 (SRV_FORCE_NO_IBUF_MERGE)
+
+삽입 버퍼 병합 연산 (insert buffer merge operations)까지 금지한다.
+
+만일 이 연산이 크래시의 원인이 된다면, 그것을 실행하지 않도록 한다. 테이블 통계값을 계산하지 않도록 한다.
+
+– 5 (SRV_FORCE_NO_UNDO_LOG_SCAN)
+
+데이터베이스를 시작할 때 언두 로그 (undo log)를 검사하지 않는다.
+
+InnoDB는 완벽하지 않은 트랜잭션도 실행된 것으로 다루게 된다.
+
+– 6 (SRV_FORCE_NO_LOG_REDO)
+
+복구 연결에서 로그 롤–포워드 (roll-forward)를 실행하지 않는다.
+```
+
 ## 참고 
 - https://woowabros.github.io/experience/2018/05/28/billingjul.html
 - https://hyunki1019.tistory.com/94?category=665171
