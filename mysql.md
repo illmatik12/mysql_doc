@@ -310,6 +310,7 @@ pmm-admin add mysql --query-source=perfschema --username=user1 --password=Mysql1
 
 ### 참고 
 - https://aws.amazon.com/ko/blogs/database/best-practices-for-configuring-parameters-for-amazon-rds-for-mysql-part-1-parameters-related-to-performance/
+- https://blog.monyog.com/troubleshooting-mysql-performance-issues/
 
 > 잡다한 팁
 - https://bstar36.tistory.com/category/MYSQL%20and%20Maria?page=26Z
