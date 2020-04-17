@@ -250,6 +250,43 @@ InnoDB는 완벽하지 않은 트랜잭션도 실행된 것으로 다루게 된�
 복구 연결에서 로그 롤–포워드 (roll-forward)를 실행하지 않는다.
 ```
 
+### Backup Sample 
+- 백업 데이터 정합성 유지를 위해서는 read lock 이 수행되어야 한다. 
+- standby 백업시 master는 transaction 발생 가능함.
+#### Master
+```bash
+echo "
+
+flush tables with read lock ;
+
+set global read_only=on ;
+
+show master status ;
+
+\! /usr/bin/mysqldump -uroot -pMysql123! --all-databases --master-data | gzip > master_$(date +"%Y_%m_%d_%I_%M_%p").sql.gz
+
+set global read_only=off ;
+
+unlock tables ; " | mysql -uroot -pMysql123!
+```
+#### Slave 
+standby 에서 backup할 경우 read lock을 걸고 수행.
+
+```bash
+echo "
+
+stop slave sql_thread ;
+
+flush tables with read lock ;
+
+\! /usr/bin/mysqldump -uroot -pMysql123! --all-databases | gzip > /all_databases_$(date +"%Y_%m_%d_%I_%M_%p").sql.gz
+
+unlock tables ;
+
+start slave ; " | mysql -uroot -pMysql123!
+```
+
+
 ## 참고 
 - https://woowabros.github.io/experience/2018/05/28/billingjul.html
 - https://hyunki1019.tistory.com/94?category=665171
