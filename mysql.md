@@ -20,6 +20,12 @@ https://ssup2.github.io/theory_analysis/MySQL_Buffer_Pool_Redo_Log_Log_Buffer/
 
 * Option 2 : InnoDB는 Redo Log에 Write 동작은 Commit 명령이 수행될 때마다 같이 수행하지만, Flush 동작은 1초 간격으로 수행한다. Option 0과 Option 1의 중간 형태의 동작을 수행한다. 단순히 MySQL에만 장애가 발생하였다면 OS Cache에 저장된 Transaction 내용은 Redo Log에 반영될 확률이 높다. 하지만 MySQL이 동작하는 Node에 장애가 발생하였을 경우, Node 장애 발생전 1초 동안의 Transaction 내용은 유실된다.
 
+## Password policy
+패스워드 정책을 낮추고자 할때 사용한다.
+```sql
+SET GLOBAL validate_password_policy=LOW;
+```
+
 ## session configuration
 ## identify slow query 
 

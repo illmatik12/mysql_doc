@@ -14,6 +14,14 @@ mysql_secure_installation
 > root 암호 입력 mysql log 참고 
 
 ```
+## local install 
+* bundle tar download 
+```
+yum localinstall mysql-community-common* mysql-community-libs* mysql-community-client* mysql-community-server-5*
+
+```
+
+
 ## replication
 ## mha 구성
 test 환경 구성 문제로 docker 기반으로 진행한다.
@@ -431,3 +439,5 @@ masterha_manager --conf=/etc/app1.cnf
 6. manager 기동
 
 ## mmm 구성 
+
+## Shard
