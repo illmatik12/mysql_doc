@@ -284,6 +284,45 @@ InnoDB 테이블(클러스터 테이블)의 모든 보조 인덱스는 해당 �
 - /usr/local/mysql/data/DB명/테이블명.MYI => Myisam Type 테이블의 index
 
 
+## 통계정보 수집
+
+* Analyze Table [Table_Name] 
+```
+mysql> analyze table employees;
++---------------------+---------+----------+----------+
+| Table               | Op      | Msg_type | Msg_text |
++---------------------+---------+----------+----------+
+| employees.employees | analyze | status   | OK       |
++---------------------+---------+----------+----------+
+1 row in set (0.26 sec)
+
+mysql> show table status like  'employees'\G
+*************************** 1. row ***************************
+           Name: employees
+         Engine: InnoDB
+        Version: 10
+     Row_format: Dynamic
+           Rows: 299246
+ Avg_row_length: 50
+    Data_length: 15220736
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2020-04-23 23:53:22
+    Update_time: 2020-04-23 23:53:28
+     Check_time: NULL
+      Collation: latin1_swedish_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+1 row in set (0.01 sec)
+
+mysql>
+```
+* Anaylyze Table [Table_name] Analyze Partition [partition_name]
+
+
 ## monitoring query 
 세션 및 트랜잭션 참조
 ### Thread Monitoring

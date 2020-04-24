@@ -21,6 +21,8 @@ yum localinstall mysql-community-common* mysql-community-libs* mysql-community-c
 
 ```
 
+* 참고 : https://yamoe.tistory.com/547
+
 
 ## replication
 ## mha 구성

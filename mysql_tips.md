@@ -175,3 +175,33 @@ WHERE cnt > 1
 ```
 
 
+## Procedure Sample
+```sql
+use testdb;
+create table board(
+board_id integer auto_increment
+,board_title varchar(200)
+, board_content varchar(4000)
+, board_date timestamp
+, PRIMARY KEY(board_id)
+);
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS loopInsert $$
+CREATE PROCEDURE loopInsert()
+BEGIN
+DECLARE i INT DEFAULT 0;
+WHILE (i <= 10000) DO 
+INSERT INTO board (board_title, board_content, board_date)
+VALUES (CONCAT('TEST',i), CONCAT('TEST_STRING',i), NOW());
+SET i = i + 1;
+END WHILE;
+END $$
+DELIMITER $$
+
+CALL loopInsert();
+
+
+create index board_idx_01 on board (board_title);
+```
