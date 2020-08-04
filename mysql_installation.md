@@ -213,7 +213,7 @@ candidate_master=1
 ```
 yum install -y openssh-server openssh-clients
 
-ssh-keyget -t rsa
+ssh-keygen -t rsa
 
 
 ssh-copy-id root@172.17.0.3
