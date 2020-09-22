@@ -131,6 +131,8 @@ log_bin_index           = /var/log/mysql/mysql-bin.index
 #innodb
 innodb_buffer_pool_size = 2048M
 
+read_only=1
+
 max_allowed_packet=128M
 innodb_log_file_size=128M
 ```
@@ -233,6 +235,10 @@ masterha_check_repl --conf=/etc/app1.cnf
 
 #### VIP Setting
 vip를 사용할 경우 방법을 기재한다.
+사이트 마다 스크립트 수정 내용이 너무 다르다. 
+
+- 참고 : https://m.blog.naver.com/PostView.nhn?blogId=kkhkykkk2&logNo=220659824800&categoryNo=0&proxyReferer=https:%2F%2Fwww.google.com%2F
+
 
 
 #### mha manager 구동

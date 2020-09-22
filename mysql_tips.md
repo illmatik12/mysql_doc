@@ -208,3 +208,10 @@ create index board_idx_01 on board (board_title);
 
 ## buffer pool tuning
 https://www.percona.com/blog/2015/06/02/80-ram-tune-innodb_buffer_pool_size/
+
+
+
+## Slave reset 
+```
+reset slave all;
+```
