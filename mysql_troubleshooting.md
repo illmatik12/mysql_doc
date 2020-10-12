@@ -21,3 +21,4 @@ Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave 
   Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have equal MySQL server UUIDs; these UUIDs must be different for replication to work.
 ```
 * auto.conf 삭제 후 재기동. 
+

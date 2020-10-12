@@ -291,3 +291,5 @@ start slave ; " | mysql -uroot -pMysql123!
 - https://woowabros.github.io/experience/2018/05/28/billingjul.html
 - https://hyunki1019.tistory.com/94?category=665171
 - https://bstar36.tistory.com/342
+
+- https://www.percona.com/blog/2017/10/23/mysql-point-in-time-recovery-right-way/
