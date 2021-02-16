@@ -129,3 +129,15 @@ ATpV6/Q=
 - 두가지 모두 부하 분산과 트랜잭션 지원 (약 13% 성능 저하)
 - 운영중 DB node 추가는  ProxySQL만 가능 , MaxScale은 재시작 필요
 - MaxScale 은 MariaDB의 Proxy
+
+
+# Replication 오류 조치 사항 
+## Error Code 확인 후 조치 
+
+## 조치 사항 
+```
+stop slave;
+set global sql_slave_skip_counter=1; 
+start slave 
+```
+* 특정 에러 코드에 대해 skip 할수 있는 기능은 존재함. 
